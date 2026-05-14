@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import Button from '@/components/ui/Button';
@@ -76,7 +75,7 @@ const DashboardPage: React.FC = () => {
         <div className="mt-3" />
 
         {/* ✅ PATIENT HISTORY BUTTON */}
-        <Button variant="secondary" size="md" fullWidth onClick={goToHistory}>
+        <Button variant="outline" size="md" fullWidth onClick={goToHistory}>
           🕒 View Patient History
         </Button>
 

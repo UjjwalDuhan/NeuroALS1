@@ -1,27 +1,27 @@
-import React, {
+import {
   createContext,
   useContext,
   useReducer,
   useEffect,
   useCallback,
   ReactNode,
-} from "react";
-import { User, AuthState } from "@/types";
+} from 'react';
+import { User, AuthState } from '@/types';
 import {
   getStoredToken,
   getStoredUser,
   setStoredToken,
   setStoredUser,
   clearAuthStorage,
-} from "@/utils/storage";
-import { getCurrentUser, logoutUser } from "@/services/authService";
+} from '@/utils/storage';
+import { getCurrentUser, logoutUser } from '@/services/authService';
 
 // ── State & Action Types ──────────────────────────────────────────────────────
 type AuthAction =
-  | { type: "SET_LOADING"; payload: boolean }
-  | { type: "LOGIN_SUCCESS"; payload: { user: User; token: string } }
-  | { type: "LOGOUT" }
-  | { type: "UPDATE_USER"; payload: User };
+  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'LOGIN_SUCCESS'; payload: { user: User; token: string } }
+  | { type: 'LOGOUT' }
+  | { type: 'UPDATE_USER'; payload: User };
 
 const initialState: AuthState = {
   user: null,
@@ -32,10 +32,10 @@ const initialState: AuthState = {
 
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
-    case "SET_LOADING":
+    case 'SET_LOADING':
       return { ...state, isLoading: action.payload };
 
-    case "LOGIN_SUCCESS":
+    case 'LOGIN_SUCCESS':
       return {
         ...state,
         user: action.payload.user,
@@ -44,13 +44,13 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         isLoading: false,
       };
 
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         ...initialState,
         isLoading: false,
       };
 
-    case "UPDATE_USER":
+    case 'UPDATE_USER':
       return { ...state, user: action.payload };
 
     default:
@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const storedUser = getStoredUser<User>();
 
       if (!storedToken || !storedUser) {
-        dispatch({ type: "SET_LOADING", payload: false });
+        dispatch({ type: 'SET_LOADING', payload: false });
         return;
       }
 
@@ -87,17 +87,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const res = await getCurrentUser();
         if (res.success && res.data?.user) {
           dispatch({
-            type: "LOGIN_SUCCESS",
+            type: 'LOGIN_SUCCESS',
             payload: { user: res.data.user, token: storedToken },
           });
         } else {
           clearAuthStorage();
-          dispatch({ type: "LOGOUT" });
+          dispatch({ type: 'LOGOUT' });
         }
       } catch {
         // Token expired or server unreachable
         clearAuthStorage();
-        dispatch({ type: "LOGOUT" });
+        dispatch({ type: 'LOGOUT' });
       }
     };
 
@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = useCallback((user: User, token: string) => {
     setStoredToken(token);
     setStoredUser(user);
-    dispatch({ type: "LOGIN_SUCCESS", payload: { user, token } });
+    dispatch({ type: 'LOGIN_SUCCESS', payload: { user, token } });
   }, []);
 
   const logout = useCallback(async () => {
@@ -117,13 +117,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Even if server call fails, clear local state
     } finally {
       clearAuthStorage();
-      dispatch({ type: "LOGOUT" });
+      dispatch({ type: 'LOGOUT' });
     }
   }, []);
 
   const updateUser = useCallback((user: User) => {
     setStoredUser(user);
-    dispatch({ type: "UPDATE_USER", payload: user });
+    dispatch({ type: 'UPDATE_USER', payload: user });
   }, []);
 
   return (
@@ -137,7 +137,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

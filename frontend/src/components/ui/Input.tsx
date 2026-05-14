@@ -1,5 +1,5 @@
-import React, { InputHTMLAttributes, forwardRef } from "react";
-import clsx from "clsx";
+import { InputHTMLAttributes, forwardRef } from 'react';
+import clsx from 'clsx';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -34,10 +34,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={clsx(
-              "form-input-base",
-              icon && "pl-10",
-              error && "error",
-              className
+              'form-input-base',
+              icon && 'pl-10',
+              error && 'error',
+              className,
             )}
             {...rest}
           />
@@ -54,8 +54,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
-Input.displayName = "Input";
+Input.displayName = 'Input';
 export default Input;
