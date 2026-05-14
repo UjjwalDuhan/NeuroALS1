@@ -13,6 +13,8 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware";
 import { initChatWebSocketServer } from "./websocket/chatServer";
 
 const app: Application = express();
+app.set('trust proxy', 1);  // ← YE ADD KARO
+connectDB();
 
 connectDB();
 
