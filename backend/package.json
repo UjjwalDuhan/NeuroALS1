@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "echo done",
-    "start": "npx ts-node src/index.ts",
+    "start": "npx ts-node --skip-project --transpile-only src/index.t",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
