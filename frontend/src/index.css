@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy: #060d1a;
+    --navy-2: #0b1829;
+    --navy-3: #0f2040;
+    --sky: #1d8cf8;
+    --teal: #00d4b4;
+    --muted: #5b7fa6;
+    --border: rgba(29, 140, 248, 0.18);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-navy text-slate-100 font-body antialiased;
+    background-color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(29, 140, 248, 0.3);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Animated gradient orbs */
+  .orb {
+    @apply absolute rounded-full;
+    filter: blur(80px);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: rgba(11, 24, 41, 0.92);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(29, 140, 248, 0.18);
+    @apply rounded-2xl;
+  }
+
+  /* Form input base */
+  .form-input-base {
+    @apply w-full rounded-xl border bg-white/5 px-4 py-3 text-sm text-slate-100
+           outline-none transition-all duration-200 placeholder:text-slate-500
+           focus:bg-sky-500/5 focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20;
+    border-color: rgba(29, 140, 248, 0.2);
+  }
+
+  .form-input-base.error {
+    @apply border-red-500/60 focus:border-red-500 focus:ring-red-500/20;
+  }
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 40px) scale(1.08); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fillIn {
+  from { width: 0; }
+}
+
+.animate-fade-up   { animation: fadeUp 0.45s cubic-bezier(.4,0,.2,1) both; }
+.stagger-1 { animation: fadeUp 0.5s 0.05s both; }
+.stagger-2 { animation: fadeUp 0.5s 0.15s both; }
+.stagger-3 { animation: fadeUp 0.5s 0.25s both; }
+.stagger-4 { animation: fadeUp 0.5s 0.35s both; }
+.stagger-5 { animation: fadeUp 0.5s 0.45s both; }
+.stagger-6 { animation: fadeUp 0.5s 0.55s both; }
+
+.fill-in { animation: fillIn 1.2s ease-out; }
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(29,140,248,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,140,248,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+}
